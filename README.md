@@ -30,7 +30,8 @@ $ python
 
 ### API Endpoints
 
-* GET     /movie
+* GET     /movies
+* GET     /movies?count=20&page=3
 * GET     /movie/:id
 * POST    /movie
 * PUT     /movie/:id

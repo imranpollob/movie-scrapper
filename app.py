@@ -92,9 +92,11 @@ def add_movie():
     return movie_schema.jsonify(new_movie)
 
 # Get All Movies
-@app.route('/movie', methods=['GET'])
+@app.route('/movies', methods=['GET'])
 def get_movies():
-    all_movies = Movie.query.all()
+    page = int(request.args.get('page')) if request.args.get('page') else 1
+    per_page = int(request.args.get('count')) if request.args.get('count') else 20
+    all_movies = Movie.query.paginate(page, per_page, False).items  #.all()
     return jsonify(movies_schema.dump(all_movies))
 
 # Get Single Movies
