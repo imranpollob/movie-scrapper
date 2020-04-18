@@ -1,6 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+import app
 
 data_reset = open("data.json", "w")
 data_reset.write("")
@@ -63,8 +64,11 @@ for link in movies_link:
         movies_info.append(movie_info)
 
         print(movie_info)
+        
+        # Adding data to database
+        app.add_movie_from_scrape(movie_info)
 
-        if i == 3:
+        if i == 5:
             break
 
         i = i + 1

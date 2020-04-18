@@ -56,7 +56,7 @@ class Movie(db.Model):
 # Movie Schema
 class MovieSchema(ma.Schema):
     class Meta:
-        fields = ('title', 'directed_by', 'produced_by', 'written_by', 'starring', 'music_by', 'cinematography',
+        fields = ('id', 'title', 'directed_by', 'produced_by', 'written_by', 'starring', 'music_by', 'cinematography',
                   'edited_by', 'distributed_by', 'release_date', 'running_time', 'country', 'language', 'budget', 'box_office')
 
 
@@ -136,6 +136,34 @@ def delete_movie(id):
     db.session.commit()
 
     return movie_schema.jsonify(movie)
+
+
+# Add movie from scrapping
+def add_movie_from_scrape(movie = {}):
+    title = movie['Title']
+    directed_by = movie['Directed by']
+    produced_by = movie['Produced by']
+    written_by = movie['Written by']
+    starring = movie['Starring']
+    music_by = movie['Music by']
+    cinematography = movie['Cinematography']
+    edited_by = movie['Edited by']
+    distributed_by = movie['Distributed by']
+    release_date = movie['Release date']
+    running_time = movie['Running time']
+    country = movie['Country']
+    language = movie['Language']
+    budget = movie['Budget']
+    box_office = movie['Box office']
+        
+
+    new_movie = Movie(title, directed_by, produced_by, written_by, starring, music_by, cinematography, edited_by,
+                 distributed_by, release_date, running_time, country, language, budget, box_office)
+
+    db.session.add(new_movie)
+    db.session.commit()
+
+    return 'ok'
 
 
 # Run Server
