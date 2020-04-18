@@ -1,5 +1,7 @@
 .vscode
 .idea
+data.json
+db.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -18,21 +18,21 @@ ma = Marshmallow(app)
 # Movie Class/Model
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255)),
-    directed_by = db.Column(db.String(255)),
-    produced_by = db.Column(db.String(255)),
-    written_by = db.Column(db.String(255)),
-    starring = db.Column(db.String(255)),
-    music_by = db.Column(db.String(255)),
-    cinematography = db.Column(db.String(255)),
-    edited_by = db.Column(db.String(255)),
-    distributed_by = db.Column(db.String(255)),
-    release_date = db.Column(db.String(255)),
-    running_time = db.Column(db.String(255)),
-    country = db.Column(db.String(255)),
-    language = db.Column(db.String(255)),
-    budget = db.Column(db.String(255)),
-    box_office = db.Column(db.String(255)),
+    title = db.Column(db.String(255))
+    directed_by = db.Column(db.String(255))
+    produced_by = db.Column(db.String(255))
+    written_by = db.Column(db.String(255))
+    starring = db.Column(db.String(255))
+    music_by = db.Column(db.String(255))
+    cinematography = db.Column(db.String(255))
+    edited_by = db.Column(db.String(255))
+    distributed_by = db.Column(db.String(255))
+    release_date = db.Column(db.String(255))
+    running_time = db.Column(db.String(255))
+    country = db.Column(db.String(255))
+    language = db.Column(db.String(255))
+    budget = db.Column(db.String(255))
+    box_office = db.Column(db.String(255))
 
     def __init__(self, title, directed_by, produced_by, written_by, starring, music_by, cinematography, edited_by,
                  distributed_by, release_date, running_time, country, language, budget, box_office):
