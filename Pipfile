@@ -10,6 +10,10 @@ autopep8 = "*"
 beautifulsoup4 = "*"
 requests = "*"
 lxml = "*"
+flask = "*"
+flask-marshmallow = "*"
+flask-sqlalchemy = "*"
+marshmallow-sqlalchemy = "*"
 
 [requires]
 python_version = "3.8"
