@@ -1,5 +1,12 @@
+import json
 import requests
 from bs4 import BeautifulSoup
+
+data_reset = open("data.json", "w")
+data_reset.write("")
+data_reset.close()
+
+data = open("data.json", "a")
 
 
 def parse_url(url):
@@ -21,6 +28,7 @@ for tr in movies_tr:
 
 movies_info = []
 
+i = 1
 
 for link in movies_link:
     movie_info = {
@@ -54,5 +62,16 @@ for link in movies_link:
 
         movies_info.append(movie_info)
 
+        print(movie_info)
+
+        if i == 3:
+            break
+
+        i = i + 1
+
     except:
-        print('\n\n'+link + " is not formatted well. Escaped"+'\n\n')
+        print('\n'+link + " is not formatted well. Escaped"+'\n')
+
+
+data.write(json.dumps(movies_info))
+data.close()
