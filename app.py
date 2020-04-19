@@ -164,15 +164,30 @@ def add_movie_from_scrape(movie = {}):
     language = movie['Language']
     budget = movie['Budget']
     box_office = movie['Box office']
+    number_of_ratings = movie['number_of_ratings']
+    ratings = movie['ratings']
         
 
     new_movie = Movie(title, directed_by, produced_by, written_by, starring, music_by, cinematography, edited_by,
-                 distributed_by, release_date, running_time, country, language, budget, box_office)
+                 distributed_by, release_date, running_time, country, language, budget, box_office, number_of_ratings, ratings)
 
     db.session.add(new_movie)
     db.session.commit()
 
-    return 'ok'
+    return 'saved'
+
+
+
+def update_movie_rating(title):
+    # movie = Movie.query.get(id)
+    movie = Movie.query.filter_by(title=title).first()
+    print(movie)
+    movie.number_of_ratings = None
+    movie.ratings = None
+
+    db.session.commit()
+
+    return 'updated'
 
 
 # Run Server

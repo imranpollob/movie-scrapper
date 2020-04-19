@@ -48,6 +48,8 @@ for link in movies_link:
         "Language": None,
         "Budget": None,
         "Box office": None,
+        "number_of_ratings": None,
+        "ratings": None,
     }
 
     try:
@@ -68,7 +70,7 @@ for link in movies_link:
         # Adding data to database
         app.add_movie_from_scrape(movie_info)
 
-        if i == 5:
+        if i == 10:
             break
 
         i = i + 1

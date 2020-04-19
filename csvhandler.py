@@ -1,6 +1,7 @@
 import requests
 import csv
 import re
+import app
 
 movie_csv_url = 'https://school.cefalolab.com/assignment/python/movies.csv'
 rating_csv_url = 'https://school.cefalolab.com/assignment/python/ratings.csv'
@@ -31,18 +32,23 @@ ratings = csv_to_list('ratings.csv')
 for rating in ratings:
     for key, value in enumerate(movies):
         if value['movieId'] == rating['movieId']:
-            if 'number_of_rating' not in value:
-                value['number_of_rating'] = 0
+            if 'number_of_ratings' not in value:
+                value['number_of_ratings'] = 0
                 value['ratings'] = []
                 value['release'] = ''
 
             year = re.findall('\(\d{4}\)$', value['title'])
             value['release'] = year[0][1:-1]
             value['title'] = value['title'].replace(year[0], '').strip()
-            value['number_of_rating'] += 1
-            value['ratings'].append(rating['rating'])
+            value['number_of_ratings'] += 1
+            value['ratings'].append(float(rating['rating']))
             break
     break
 
-print(movies[0])
+for movie in movies:
+    print(movie)
+    break
+
+
+# print(movies[0])
 
