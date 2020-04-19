@@ -3,11 +3,11 @@ import requests
 from bs4 import BeautifulSoup
 import app
 
-data_reset = open("data.json", "w")
-data_reset.write("")
-data_reset.close()
-
-data = open("data.json", "a")
+# Store result into a json file
+# data_reset = open("data.json", "w")
+# data_reset.write("")
+# data_reset.close()
+# data = open("data.json", "a")
 
 
 def parse_url(url):
@@ -61,7 +61,7 @@ for link in movies_link:
             if tr.find('th') and tr.find('td') and tr.find('th').text in movie_info:
                 movie_info[tr.find('th').text] = tr.find('td').text
 
-        movies_info.append(movie_info)
+        # movies_info.append(movie_info)
 
         print(movie_info)
         
@@ -77,5 +77,5 @@ for link in movies_link:
         print('\n'+link + " is not formatted well. Escaped"+'\n')
 
 
-data.write(json.dumps(movies_info))
-data.close()
+# data.write(json.dumps(movies_info))
+# data.close()
