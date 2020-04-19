@@ -33,9 +33,11 @@ class Movie(db.Model):
     language = db.Column(db.String(255))
     budget = db.Column(db.String(255))
     box_office = db.Column(db.String(255))
+    number_of_ratings = db.Column(db.Integer)
+    ratings = db.Column(db.Float)
 
     def __init__(self, title, directed_by, produced_by, written_by, starring, music_by, cinematography, edited_by,
-                 distributed_by, release_date, running_time, country, language, budget, box_office):
+                 distributed_by, release_date, running_time, country, language, budget, box_office, number_of_ratings, ratings):
         self.title = title
         self.directed_by = directed_by
         self.produced_by = produced_by
@@ -51,13 +53,16 @@ class Movie(db.Model):
         self.language = language
         self.budget = budget
         self.box_office = box_office
+        self.number_of_ratings = number_of_ratings
+        self.ratings = ratings
 
 
 # Movie Schema
 class MovieSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'directed_by', 'produced_by', 'written_by', 'starring', 'music_by', 'cinematography',
-                  'edited_by', 'distributed_by', 'release_date', 'running_time', 'country', 'language', 'budget', 'box_office')
+                  'edited_by', 'distributed_by', 'release_date', 'running_time', 'country', 'language', 'budget',
+                  'box_office', 'number_of_ratings', 'ratings')
 
 
 # Init schema
@@ -82,9 +87,11 @@ def add_movie():
     language = request.json['Language']
     budget = request.json['Budget']
     box_office = request.json['Box office']
+    number_of_ratings = None
+    ratings = None
 
     new_movie = Movie(title, directed_by, produced_by, written_by, starring, music_by, cinematography, edited_by,
-                 distributed_by, release_date, running_time, country, language, budget, box_office)
+                 distributed_by, release_date, running_time, country, language, budget, box_office, number_of_ratings, ratings)
 
     db.session.add(new_movie)
     db.session.commit()
