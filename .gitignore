@@ -3,6 +3,8 @@
 data.json
 db.sqlite
 .DS_Store
+movies.csv
+ratings.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
