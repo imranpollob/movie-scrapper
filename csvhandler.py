@@ -22,8 +22,8 @@ def csv_to_list(filename):
 
 
 # Downloading files
-download_csv(movie_csv_url, 'movies.csv')
-download_csv(rating_csv_url, 'ratings.csv')
+# download_csv(movie_csv_url, 'movies.csv')
+# download_csv(rating_csv_url, 'ratings.csv')
 
 # Initializing dictionaries
 movies = csv_to_list('movies.csv')
@@ -47,6 +47,7 @@ for rating in ratings:
 
 for movie in movies:
     print(movie)
+    app.update_movie_rating(movie)  
     break
 
 

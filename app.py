@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy import func
 import os
 
 # Init app
@@ -178,14 +179,16 @@ def add_movie_from_scrape(movie = {}):
 
 
 
-def update_movie_rating(title):
-    # movie = Movie.query.get(id)
-    movie = Movie.query.filter_by(title=title).first()
-    print(movie)
-    movie.number_of_ratings = None
-    movie.ratings = None
+def update_movie_rating(movie):
+    movie_from_db = Movie.query.filter(func.lower(Movie.title) == func.lower(movie['title'])).first()
+    # .filter(Movie.release_date.like(movie['release']))
+    print(movie_from_db)
+    
+    if movie_from_db:
+        movie_from_db.number_of_ratings = movie['number_of_ratings']
+        movie_from_db.ratings = sum(movie['ratings']) / len(movie['ratings'])
 
-    db.session.commit()
+        db.session.commit()
 
     return 'updated'
 
