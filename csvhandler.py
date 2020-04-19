@@ -1,30 +1,48 @@
 import requests
 import csv
+import re
 
 movie_csv_url = 'https://school.cefalolab.com/assignment/python/movies.csv'
-rating_csv_url = 'https://school.cefalolab.com/assignment/python/movies.csv'
+rating_csv_url = 'https://school.cefalolab.com/assignment/python/ratings.csv'
 
 
-req = requests.get(movie_csv_url, verify=False)
-url_content = req.content
+def download_csv(url, filename):
+    req = requests.get(url, verify=False)
+    url_content = req.content
 
-csv_file = open('movies.csv', 'wb')
-csv_file.write(url_content)
-csv_file.close()
+    csv_file = open(filename, 'wb')
+    csv_file.write(url_content)
+    csv_file.close()
 
 
-with open('movies.csv') as csv_file:
-    # csv_reader = csv.reader(csv_file, delimiter=',')
-    # for row in csv_reader:
-    #     print(row)
+def csv_to_list(filename):
+    csv_file = open(filename)
+    return list(csv.DictReader(csv_file))
 
-    csv_reader_dict = csv.DictReader(csv_file)
-    line_count = 0
 
-    for row in csv_reader_dict:
-        if line_count == 0:
-            print(f'Column names are {", ".join(row)}')
-            line_count += 1
+# Downloading files
+download_csv(movie_csv_url, 'movies.csv')
+download_csv(rating_csv_url, 'ratings.csv')
 
-        line_count += 1
-        print(row['title'])
+# Initializing dictionaries
+movies = csv_to_list('movies.csv')
+ratings = csv_to_list('ratings.csv')
+
+for rating in ratings:
+    for key, value in enumerate(movies):
+        if value['movieId'] == rating['movieId']:
+            if 'number_of_rating' not in value:
+                value['number_of_rating'] = 0
+                value['ratings'] = []
+                value['release'] = ''
+
+            year = re.findall('\(\d{4}\)$', value['title'])
+            value['release'] = year[0][1:-1]
+            value['title'] = value['title'].replace(year[0], '').strip()
+            value['number_of_rating'] += 1
+            value['ratings'].append(rating['rating'])
+            break
+    break
+
+print(movies[0])
+
