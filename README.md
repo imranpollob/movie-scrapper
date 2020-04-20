@@ -33,10 +33,14 @@ $ python scrapper.py OPTIONAL_LIMIT
 # Omit OPTIONAL_LIMIT if you want scrap full list
 ```
 
+> Here is the file after above execution [db.sqlite](pre-generated/01-after-scrapping-wiki/db.sqlite)
+
 ### Update Database With CSV
 ``` bash
 $ python csvhandler.py
 ```
+
+> Here is the file after above execution [db.sqlite](pre-generated/02-after-csv-update/db.sqlite)
 
 ### Serve API 
 ``` bash
