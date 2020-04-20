@@ -16,6 +16,7 @@ def parse_url(url):
 
 website_url = 'https://en.wikipedia.org/wiki/List_of_Academy_Award-winning_films'
 
+print('Start scrapping the main list...')
 
 movies_tr = parse_url(website_url).find(
     'table', class_='wikitable sortable').tbody.find_all('tr')
@@ -27,7 +28,9 @@ for tr in movies_tr:
         movies_link.append('https://en.wikipedia.org'+tr.find('a').get('href'))
 
 
-movies_info = []
+# movies_info = []
+
+print('Start scrapping individual movie...')
 
 i = 1
 
@@ -65,12 +68,12 @@ for link in movies_link:
 
         # movies_info.append(movie_info)
 
-        print(movie_info)
+        print("Scrapping " + link)
         
         # Adding data to database
         app.add_movie_from_scrape(movie_info)
 
-        if i == 10:
+        if i == 100:
             break
 
         i = i + 1
@@ -81,3 +84,5 @@ for link in movies_link:
 
 # data.write(json.dumps(movies_info))
 # data.close()
+
+print('Scrapping done...')
