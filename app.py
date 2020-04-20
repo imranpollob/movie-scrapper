@@ -19,7 +19,7 @@ ma = Marshmallow(app)
 # Movie Class/Model
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(255), nullable=False)
     directed_by = db.Column(db.String(255))
     produced_by = db.Column(db.String(255))
     written_by = db.Column(db.String(255))
@@ -70,26 +70,30 @@ class MovieSchema(ma.Schema):
 movie_schema = MovieSchema()
 movies_schema = MovieSchema(many=True)
 
+# Check value
+def check(request, key):
+    return request.json[key] if key in request.json else None
+
 # Create a Movie
 @app.route('/movie', methods=['POST'])
 def add_movie():
     title = request.json['Title']
-    directed_by = request.json['Directed by']
-    produced_by = request.json['Produced by']
-    written_by = request.json['Written by']
-    starring = request.json['Starring']
-    music_by = request.json['Music by']
-    cinematography = request.json['Cinematography']
-    edited_by = request.json['Edited by']
-    distributed_by = request.json['Distributed by']
-    release_date = request.json['Release date']
-    running_time = request.json['Running time']
-    country = request.json['Country']
-    language = request.json['Language']
-    budget = request.json['Budget']
-    box_office = request.json['Box office']
-    number_of_ratings = None
-    ratings = None
+    directed_by = check(request,'Directed by')
+    produced_by = check(request,'Produced by')
+    written_by = check(request,'Written by')
+    starring = check(request,'Starring')
+    music_by = check(request,'Music by')
+    cinematography = check(request,'Cinematography')
+    edited_by = check(request,'Edited by')
+    distributed_by = check(request,'Distributed by')
+    release_date = check(request,'Release date')
+    running_time = check(request,'Running time')
+    country = check(request,'Country')
+    language = check(request,'Language')
+    budget = check(request,'Budget')
+    box_office = check(request, 'Box office')
+    number_of_ratings = check(request, 'number_of_ratings')
+    ratings = check(request, 'ratings')
 
     new_movie = Movie(title, directed_by, produced_by, written_by, starring, music_by, cinematography, edited_by,
                  distributed_by, release_date, running_time, country, language, budget, box_office, number_of_ratings, ratings)
@@ -119,20 +123,26 @@ def update_movie(id):
     movie = Movie.query.get(id)
     
     movie.title = request.json['Title']
-    movie.directed_by = request.json['Directed by']
-    movie.produced_by = request.json['Produced by']
-    movie.written_by = request.json['Written by']
-    movie.starring = request.json['Starring']
-    movie.music_by = request.json['Music by']
-    movie.cinematography = request.json['Cinematography']
-    movie.edited_by = request.json['Edited by']
-    movie.distributed_by = request.json['Distributed by']
-    movie.release_date = request.json['Release date']
-    movie.running_time = request.json['Running time']
-    movie.country = request.json['Country']
-    movie.language = request.json['Language']
-    movie.budget = request.json['Budget']
-    movie.box_office = request.json['Box office']
+    movie.directed_by = check(request, 'Directed by')
+    movie.produced_by = check(request, 'Produced by')
+    movie.written_by = check(request, 'Written by')
+    movie.starring = check(request, 'Starring')
+    movie.music_by = check(request, 'Music by')
+    movie.cinematography = check(request, 'Cinematography')
+    movie.edited_by = check(request, 'Edited by')
+    movie.distributed_by = check(request, 'Distributed by')
+    movie.release_date = check(request, 'Release date')
+    movie.running_time = check(request, 'Running time')
+    movie.country = check(request, 'Country')
+    movie.language = check(request, 'Language')
+    movie.budget = check(request, 'Budget')
+    movie.box_office = check(request, 'Box office')
+    
+    if check(request, 'number_of_ratings'):
+        movie.number_of_ratings = check(request, 'number_of_ratings')
+    
+    if check(request, 'ratings'):
+        movie.ratings = check(request, 'ratings')
 
     db.session.commit()
 
@@ -180,8 +190,9 @@ def add_movie_from_scrape(movie = {}):
 
 
 def update_movie_rating(movie):
-    movie_from_db = Movie.query.filter(func.lower(Movie.title) == func.lower(movie['title'])).first()
-    # .filter(Movie.release_date.like(movie['release']))
+    movie_from_db = Movie.query.filter(func.lower(Movie.title) == func.lower(movie['title'])). \
+        filter(Movie.release_date.contains(movie['release'])).first()
+
     print(movie_from_db)
     
     if movie_from_db:
