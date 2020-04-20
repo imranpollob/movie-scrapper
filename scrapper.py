@@ -2,6 +2,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 import app
+import sys
 
 # Store result into a json file
 # data_reset = open("data.json", "w")
@@ -33,6 +34,13 @@ for tr in movies_tr:
 print('Start scrapping individual movie...')
 
 i = 1
+n = -1
+
+if len(sys.argv) > 1:
+    try: 
+        n = int(sys.argv[1])
+    except:
+        pass
 
 for link in movies_link:
     movie_info = {
@@ -73,7 +81,7 @@ for link in movies_link:
         # Adding data to database
         app.add_movie_from_scrape(movie_info)
 
-        if i == 100:
+        if i == n:
             break
 
         i = i + 1
