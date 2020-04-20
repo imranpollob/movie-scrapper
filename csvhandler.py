@@ -29,7 +29,8 @@ download_csv(rating_csv_url, 'ratings.csv')
 movies = csv_to_list('movies.csv')
 ratings = csv_to_list('ratings.csv')
 
-print('Collecting ratings...')
+print('Mapping ratings...')
+print('Stay put. This could take some minutes 🤓')
 
 for rating in ratings:
     for key, value in enumerate(movies):
