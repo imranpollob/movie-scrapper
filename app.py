@@ -193,11 +193,11 @@ def update_movie_rating(movie):
     movie_from_db = Movie.query.filter(func.lower(Movie.title) == func.lower(movie['title'])). \
         filter(Movie.release_date.contains(movie['release'])).first()
 
-    print(movie_from_db)
+    print(movie_from_db.title)
     
     if movie_from_db:
         movie_from_db.number_of_ratings = movie['number_of_ratings']
-        movie_from_db.ratings = sum(movie['ratings']) / len(movie['ratings'])
+        movie_from_db.ratings = round(sum(movie['ratings']) / len(movie['ratings']), 2)
 
         db.session.commit()
 
