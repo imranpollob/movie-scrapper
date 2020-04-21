@@ -28,7 +28,7 @@ def add_movie_from_scrape(movie = {}):
     db.session.add(new_movie)
     db.session.commit()
 
-    return 'saved'
+    return True
 
 
 
@@ -44,4 +44,4 @@ def update_movie_rating(movie):
 
         db.session.commit()
 
-    return 'updated'
+    return True
