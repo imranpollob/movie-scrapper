@@ -1,7 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-import app
+from Service.MovieService import add_movie_from_scrape
 import sys
 
 # Store result into a json file
@@ -79,7 +79,7 @@ for link in movies_link:
         print("Scrapping " + link)
         
         # Adding data to database
-        app.add_movie_from_scrape(movie_info)
+        add_movie_from_scrape(movie_info)
 
         if i == n:
             break

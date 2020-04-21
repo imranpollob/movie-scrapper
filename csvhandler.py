@@ -1,7 +1,7 @@
 import requests
 import csv
 import re
-import app
+from Service.MovieService import update_movie_rating
 
 movie_csv_url = 'https://school.cefalolab.com/assignment/python/movies.csv'
 rating_csv_url = 'https://school.cefalolab.com/assignment/python/ratings.csv'
@@ -41,20 +41,20 @@ for rating in ratings:
                 value['release'] = ''
 
             year = re.findall('\(\d{4}\)', value['title'])
-            
+
             if len(year):
                 value['release'] = year[0][1:-1]
                 value['title'] = value['title'].replace(year[0], '').strip()
             else:
                 value['title'] = value['title'].strip()
-                
+
             value['number_of_ratings'] += 1
             value['ratings'].append(float(rating['rating']))
-            
+
             break
-            
+
 print('Updating database...')
 
 for movie in movies:
     if 'number_of_ratings' in movie:
-        app.update_movie_rating(movie)  
+        update_movie_rating(movie)
