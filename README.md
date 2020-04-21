@@ -56,6 +56,7 @@ $ python app.py
 * POST    /movie
 * PUT     /movie/:id
 * DELETE  /movie/:id
+* GET     /movies/search/:title
 
 ### Postman Collection
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/e96ec3418a4daaf57f88)

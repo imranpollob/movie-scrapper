@@ -111,6 +111,12 @@ def get_movies():
     all_movies = Movie.query.paginate(page, per_page, False).items  #.all()
     return jsonify(movies_schema.dump(all_movies))
 
+# Search Movies
+@app.route('/movies/search/<title>', methods=['GET'])
+def search_movies(title):
+    all_movies = Movie.query.filter(Movie.title.like('%' + title + '%')).all()
+    return jsonify(movies_schema.dump(all_movies))
+
 # Get Single Movies
 @app.route('/movie/<id>', methods=['GET'])
 def get_movie(id):
